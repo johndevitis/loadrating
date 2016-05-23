@@ -5,3 +5,11 @@
 
 # matlab autosave files
 *.asv
+
+*.tmp
+
+# ms office tmp files
+~$*.doc*
+~$*.xls*
+*.xlk
+~$*.ppt*
