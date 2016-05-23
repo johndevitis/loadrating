@@ -1,0 +1,18 @@
+name,var,unit,value
+Span Length,Lb,in,1
+Max unbraced Length,Lb,in,2
+Steel Modulous,E,psi,3
+Steel Yield Strength,Fy,psi,4
+Concrete Strength,fc,psi,5
+Deck Thickness,ts,in,6
+Effective Width,be,in,7
+Haunch Dept,dh,in,8
+Web Depth,dw,in,9
+Web Thickness,tw,in,10
+Top Flange Width,bf_top,in,11
+Top Flange Thickness,tf_top,in,12
+Bottom Flange Width,bf_bot,in,13
+Bottom Flange Thickness,tf_bot,in,14
+NonSuperimposed DL,wDL,lb,15
+Superimposed DL,wSDL,lb,16
+Wearing DL,wSDW,lb,17
