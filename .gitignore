@@ -1,5 +1,8 @@
 # ignore...
 
+# reference folder
+ref/
+
 # zip files
 *.zip
 
