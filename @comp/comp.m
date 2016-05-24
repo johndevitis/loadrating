@@ -14,7 +14,7 @@ classdef comp < section
         beST % short-term effective width
         AeLT % long-term effective area               
         AeST % short-term effective area               
-        D % total depth of composite section
+        D % total depth of composite section [in]
         yBst % distance to bottom of section from elastic neutral axis
         yTst % distance of E.N.A. to top of top flange
         yDst % distance of E.N.A. to top of deck
