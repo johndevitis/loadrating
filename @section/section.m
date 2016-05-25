@@ -36,8 +36,8 @@ classdef section < matlab.mixin.SetGet
         end
         
         %% -- file io -- %
-        function read_xls(obj,fname,tname)
-            % fname = full file path
+        function read_xls(obj,pname,tab)
+            % pname = full file path
             % tname = tab name
             % name/value indices -> 1, 4
             names = fieldnames(obj);
@@ -45,11 +45,11 @@ classdef section < matlab.mixin.SetGet
             vInd = 2; % value index
             uInd = 3; % units index
             % read excel file
-            [~,~,raw] = xlsread(fname,tname);
+            [~,~,raw] = xlsread(pname,tab);
             % loop for compatable inputs
             %   variable names must be same name as obj property
             tot = 0; % total load counter
-            fprintf('Loading from xls file... \n');
+            fprintf('Loading from file... \n');
             for ii = 1:size(raw,1)
                 for jj = 1:length(names)
                     if strcmp(names{jj}, raw{ii,nInd})
@@ -67,6 +67,27 @@ classdef section < matlab.mixin.SetGet
             fprintf('Total fields read: %i. Done. \n',tot);
         end
         
+        function write(obj,fname,tab)
+            % fname = fullfile path
+            % tab = optional tab for xls sheets
+            if nargin < 3, tab = []; end % error screen null tab
+            names = fieldnames(obj); % get field names
+            dat = names; % data to write
+            % build write table
+            for ii = 1:length(names)
+                dat{ii,2} = obj.(names{ii});
+            end
+            % concat add name/value header
+            dat = [{'NAME', 'VALUE'}; dat];
+            fprintf('Writing to file... ');
+            % error screen null tab entry (for csv files, etc)
+            if ~isempty(tab)
+                xlswrite(fname,dat,tab);
+            else
+                xlswrite(fname,dat);
+            end
+            fprintf('Done.\n');
+        end
         
         %% -- dependent methods -- %
         function d = get.d(obj)
