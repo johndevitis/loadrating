@@ -17,7 +17,8 @@ function [M_Max, M_Min, V_Max, V_Min, M, V] = GetMemberForceVector(Delta, E, num
 
     % Get local (internal) nodal actions from global displacement matrix
     for i=1:numEle % for each ele 
-        for j=1:size(Delta,2) % for each load location (lane loads have a singular value
+        for j=1:size(Delta,2) 
+            % for each load location (lane loads have a singular value
 
             Loc = 2*i-1;
 

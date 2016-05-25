@@ -9,16 +9,11 @@ classdef lrfr
 
 	%% -- dependent properties -- %%
 	properties (Dependent)
-        Mp % plastic moment of the composite section
-        Dpst % distance from the top of the slab to PNA [in]
-        Dcp % depth of the web in compression at the plastic moment
-        id % integer PNA location id per Table D6.1-1
-        compact % Compact/Non-Noncompact logical 
-        ductility % ductility check logical
         Mn_Strength1Pos % 
         Fn_Strength1Pos % 
         Fn_Service2Pos % 
-        
+        Vn % shear resistance
+        webStiffened % logical -> 6.10.9.1
 	end
 
 	%% -- developer properties -- %%
@@ -29,9 +24,18 @@ classdef lrfr
 	methods
 		%% -- constructor -- %%
 		function obj = lrfr()
+            % 
 		end
 
 		%% -- dependent methods -- %%
+        function webStiffened = get.webStiffened(obj)
+            % determine if stiffener was required per 6.10.9.1
+            if obj.Lb <= 3*obj.dw
+                webStiffened = 1;
+            else
+                webStiffened = 0;
+            end
+        end
 
 	end
 

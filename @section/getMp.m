@@ -1,6 +1,5 @@
-function [Mp, Dpst, Dcp, id] = calculateSectionPlasticMoment(s)
-%% [Mp, Dpst, Dcp, id] = calculateSectionPlasticMoment(section)
-%
+function [Mp, Dpst, Dcp, id] = getMp(s)
+%%
 % Determine Plastic Moment: AASHTO LRFD Manual Appendix D6
 %
 % Plastic forces in steel portions of the cross-section are calculated
