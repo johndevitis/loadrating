@@ -143,42 +143,34 @@ classdef comp < section
 
 		function Ist = get.Ist(obj)
 		% short term elastic moment of inertia
-            
+            Ist = obj.Ix + obj.A*(obj.yBst - obj.d/2)^2 + ...
+                obj.Ast*obj.ts^2/12 + obj.Ast*(obj.yDst - obj.ts/2)^2; 
 		end
 
 		function Ilt = get.Ilt(obj)
 		% long term elastic moment of intertia
-            
-		end
+            Ilt = obj.Ix + obj.A*(obj.yBlt - obj.d/2)^2 + ...
+                obj.Alt*obj.ts^2/12 + obj.Alt*(obj.yDlt - obj.ts/2)^2;
+        end
 
-		function SDst = get.SDst(obj)
-		% short term section modoulus
-            
-		end
-
-		function STst = get.STst(obj)
-		% short term section modulus
-            
-		end
+        function STst = get.STst(obj)
+        % short term section modulus
+            STst = obj.Ist/obj.yTst;
+        end
 
 		function SBst = get.SBst(obj)
 		% short term section modulus
-            
-		end
-
-		function SDlt = get.SDlt(obj)
-		% long term section modulus
-            
-		end
+            SBst = obj.Ist/obj.yBst;
+        end
 
 		function STlt = get.STlt(obj)
 		% long term section modulus
-            
+            STlt = obj.Ilt/obj.yTlt;
 		end
 
 		function SBlt = get.SBlt(obj)
 		% long term section modulus
-            
+            SBlt = obj.Ilt/obj.yBlt;
 		end
 
 	end

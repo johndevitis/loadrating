@@ -1,12 +1,14 @@
 function [Vn,Vp] = getShear(s,panel,location)
 % [Vn, Vp] = getShear(s,panel,location)
 %
-% Vn % shear resistance
-% Vp % plastic shear force
+% Inputs: 
+%  s - section properties
+%  panel - interior/end 
+%  location - pos/neg - to determine tension/compression flanges
 %
-% s - section properties
-% panel - interior/end 
-% location - pos/neg - to determine tension/compression flanges
+% Outputs: 
+%  Vn % shear resistance
+%  Vp % plastic shear force
 
 % Define Variables
 dw = s.dw;

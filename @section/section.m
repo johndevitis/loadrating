@@ -28,12 +28,6 @@ classdef section < matlab.mixin.SetGet
     properties (Dependent = true)   
         d % total depth of non-composite steel section (wide flange)[in] 
         Ec % deck modulous [psi] -> 57000*sqrt(fc)      
-        Mp % plastic moment of the composite section
-        Dpst % distance from the top of the slab to PNA [in]
-        Dcp % depth of the web in compression at the plastic moment
-        id % integer PNA location id per Table D6.1-1
-        compact % Compact/Non-Noncompact logical 
-        ductility % ductility check logical
     end    
     
     methods        
@@ -70,7 +64,7 @@ classdef section < matlab.mixin.SetGet
                     end
                 end
             end
-            fprintf('Total files loaded %i. Done. \n',tot);
+            fprintf('Total fields read: %i. Done. \n',tot);
         end
         
         
@@ -86,6 +80,7 @@ classdef section < matlab.mixin.SetGet
         % 1820*sqrt(fc) [ksi] as it is slightly conservative
             Ec = 57000*sqrt(obj.fc);
         end        
+        
                 
     end    
 end

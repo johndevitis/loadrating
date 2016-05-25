@@ -1,23 +1,23 @@
 function r = getPosFlex(s,d)
 % r = getPosFlex(s,d)
-%
-% Originally created by NPR (nick.p.romano@gmail.com) 03/20/2016
-% Refactored by jdv 05242016
-% 
+
 % *This version does not support negative haunch depths
 %
 % returned rating structure, r, contains:
 % 
-% Mp, Dpst, Dcp, id (remove)
 %
 % Mn_Strength1Pos
 % Fn_Service2Pos
 % ductility
-% compat
+% compat % check if section is compact or not per 6.10.6.2.2
+% 
+%
+% Originally created by NPR (nick.p.romano@gmail.com) 03/20/2016
+% Refactored by jdv 05242016
 % 
 
     % Define Variables
-    Spans = s.nSpans;
+    Spans = s.nSpans; 
     Fy = s.Fy; % Yeild Strength of flanges and web [psi]
     Es = s.Es; % Young's Modulus [psi]   
     tw = s.tw; % Thickness of the web
@@ -37,10 +37,10 @@ function r = getPosFlex(s,d)
     MSDW_pos = d.MSDW_pos; % Superimposed dead load fro wearing surface
 
     % Determine plastic moment and location of plastic netral axis
-    [Mp, Dpst, Dcp, id] = calculateSectionPlasticMoment(s);
+    [Mp, Dpst, Dcp, id] = getMp(s);
     
     % assign to r struct
-    r.Mp = Mp; r.Dpst = Dpst; r.Dcp =Dcp; r.id = id;
+%     r.Mp = Mp; r.Dpst = Dpst; r.Dcp =Dcp; r.id = id;
         
     % Check Ductility
     if Dpst <= 0.42*D

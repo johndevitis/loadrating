@@ -1,19 +1,18 @@
-classdef lrfr
+classdef lrfr < section
 %% classdef lrfr
 % author: 
 % create date: 24-May-2016 21:43:12
 
 	%% -- object properties -- %%
 	properties
+        Mn_Strength1Pos % 
+        Fn_Strength1Pos % 
+        Fn_Service2Pos % 
+        Vn % 
 	end
 
 	%% -- dependent properties -- %%
 	properties (Dependent)
-        Mn_Strength1Pos % 
-        Fn_Strength1Pos % 
-        Fn_Service2Pos % 
-        Vn % shear resistance
-        webStiffened % logical -> 6.10.9.1
 	end
 
 	%% -- developer properties -- %%
@@ -25,17 +24,9 @@ classdef lrfr
 		%% -- constructor -- %%
 		function obj = lrfr()
             % 
-		end
+        end
 
 		%% -- dependent methods -- %%
-        function webStiffened = get.webStiffened(obj)
-            % determine if stiffener was required per 6.10.9.1
-            if obj.Lb <= 3*obj.dw
-                webStiffened = 1;
-            else
-                webStiffened = 0;
-            end
-        end
 
 	end
 
