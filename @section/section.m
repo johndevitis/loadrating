@@ -40,9 +40,9 @@ classdef section < matlab.mixin.SetGet
             % tname = tab name
             % name/value indices -> 1, 4
             names = fieldnames(obj);
-            nInd = 2; % name index 
+            nInd = 1; % name index 
             uInd = 3; % units index
-            vInd = 4; % value index
+            vInd = 2; % value index
             % read excel file
             [~,~,raw] = xlsread(fname,tname);
             % loop for compatable inputs
