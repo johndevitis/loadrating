@@ -10,10 +10,10 @@ classdef comp < section
 	%% -- dependent properties -- %%
 	properties (Dependent)
         N % modulous ratio                          
-        beLT % long-term effective width
-        beST % short-term effective width
-        AeLT % long-term effective area               
-        AeST % short-term effective area               
+        belt % long-term effective width
+        best % short-term effective width
+        Alt % long-term effective area               
+        Ast % short-term effective area               
         D % total depth of composite section [in]
         yBst % distance to bottom of section from elastic neutral axis
         yTst % distance of E.N.A. to top of top flange
@@ -21,8 +21,6 @@ classdef comp < section
         yBlt % distance to bottom of section from elastic neutral axis
         yTlt % distance of E.N.A. to top of top flange
         yDlt % distance of E.N.A. to top of deck      
-        ena_st_loc % location of short term ena (deck or steel)       
-        ena_lt_loc % location of long term ena (deck or steel)
         Ist % short term elastic moment of inertia 
         Ilt % long term elastic moment of intertia   
         SDst % short term section modoulus         
@@ -31,6 +29,8 @@ classdef comp < section
         SDlt % long term section modulus              
         STlt % long term section modulus              
         SBlt % long term section modulus     
+        ena_loc_st % location of short-term elastic neutral axis
+        ena_loc_lt % location of long-term elastic neutral axis
 	end
 
 	%% -- developer properties -- %%
@@ -52,24 +52,24 @@ classdef comp < section
             N = obj.Es/obj.Ec;
 		end
 
-		function beLT = get.beLT(obj)
+		function belt = get.belt(obj)
 		% long-term effective width
-            beLT = obj.be/(3*obj.N);
+            belt = obj.be/(3*obj.N);
 		end
 
-		function beST = get.beST(obj)
+		function best = get.best(obj)
 		% short-term effective width
-            beST = obj.be/obj.N;
+            best = obj.be/obj.N;
 		end
 
-		function AeLT = get.AeLT(obj)
+		function Alt = get.Alt(obj)
 		% long-term effective area
-            AeLT = obj.ts*obj.beLT;
+            Alt = obj.ts*obj.belt;
 		end
 
-		function AeST = get.AeST(obj)
+		function Ast = get.Ast(obj)
 		% short-term effective area
-            AeST = obj.ts*obj.beST;
+            Ast = obj.ts*obj.best;
 		end
 
 		function D = get.D(obj)
@@ -80,65 +80,43 @@ classdef comp < section
 		function yBst = get.yBst(obj)
 		% distance to bottom of section from elastic neutral axis
         %  formula to find centroid: y = sum(Ai*yi)/sum(Ai)
-            yBst = (obj.Ast*(obj.ts/2 + obj.dh + obj.d) + ...
-                obj.A * obj.yBnc)/(obj.Ast + obj.A);
+            yBst = (obj.Ast.*(obj.ts/2 + obj.dh + obj.d) + ...
+                obj.A.*obj.yBnc)./(obj.Ast + obj.A);
 		end
 
 		function yTst = get.yTst(obj)
 		% distance of E.N.A. to top of top flange
-            
+            if strcmp(obj.ena_loc_st,'deck')
+                yTst = obj.Bst - obj.d;
+            else
+                yTst = obj.d - obj.yBst;
+            end
 		end
 
 		function yDst = get.yDst(obj)
 		% distance of E.N.A. to top of deck
-            
+            yDst = obj.D - obj.yBst;
 		end
 
 		function yBlt = get.yBlt(obj)
 		% distance to bottom of section from elastic neutral axis
         %  formula to find centroid: y = sum(Ai*yi)/sum(Ai)
-            yBlt = (obj.Alt * (obj.ts/2 + obj.dh + obj.d) + ...
+            yBlt = (obj.Aelt * (obj.ts/2 + obj.dh + obj.d) + ...
                 obj.A * obj.yBcn) / (obj.Alt + obj.A);
 		end
 
 		function yTlt = get.yTlt(obj)
 		% distance of E.N.A. to top of top flange
-            
+            if strcmp(obj.ena_loc_lt,'deck')
+                yTlt = obj.Blt - obj.d;
+            else
+                yTlt = obj.d - obj.Blt;
+            end            
 		end
 
 		function yDlt = get.yDlt(obj)
 		% distance of E.N.A. to top of deck
-            
-		end
-
-		function ena_st_loc = get.ena_st_loc(obj)
-		% where yBst is? (deck or steel?)
-            if obj.yBst > obj.d 
-                % elastic netural axis is in the deck
-                ena_st_loc = 'deck';
-                obj.yTst = obj.yBst - d;
-                obj.yDst = obj.D - obj.yBst;
-            elseif obj.yBst < d 
-                % elastic neutral axis is in the steel
-                ena_st_loc = 'steel';
-                obj.yTst = obj.d - obj.yBst;
-                obj.yDst = obj.D - obj.yBst;
-            end            
-		end
-
-		function ena_lt_loc = get.ena_lt_loc(obj)
-		% where yBst is? (deck or steel?)
-            if obj.yBlt > d
-                % ena is in deck
-                ena_lt_loc = 'deck';
-                obj.yTlt = obj.yBlt - obj.d;
-                obj.yDlt = obj.D - obj.yBlt;
-            elseif obj.yBlt < d 
-                % ena is in steel
-                ena_lt_loc = 'steel';
-                obj.yTlt = obj.d - obj.yBlt;
-                obj.yDlt = obj.D -obj.yBlt;
-            end            
+            yDlt = obj.D - obj.Blt;            
 		end
 
 		function Ist = get.Ist(obj)
@@ -171,13 +149,34 @@ classdef comp < section
 		function SBlt = get.SBlt(obj)
 		% long term section modulus
             SBlt = obj.Ilt/obj.yBlt;
-		end
-
+        end
+        
+        function ena_loc_st = get.ena_loc_st(obj)
+        % location of short-term elastic neutral axis
+            if obj.yBst > obj.d
+                ena_loc_st = 'deck';
+            elseif obj.yBst < obj.d
+                ena_loc_st = 'steel';
+            else
+                ena_loc_st = 'error';
+            end
+        end
+        
+        function ena_loc_lt = get.ena_loc_lt(obj)
+        % location of long-term elastic neutral axis
+            if obj.yBlt > obj.d
+                ena_loc_lt = 'deck';
+            elseif obj.yBlt < obj.d
+                ena_loc_lt = 'steel';
+            else
+                ena_loc_lt = 'error';
+            end
+        end
 	end
 
 	%% -- static methods -- %%
 	methods (Static)
-	end
+    end
 
 	%% -- internal methods -- %%
 	methods (Access = private)
