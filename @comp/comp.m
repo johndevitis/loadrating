@@ -23,10 +23,10 @@ classdef comp < section
         yDlt % distance of E.N.A. to top of deck      
         Ist % short term elastic moment of inertia 
         Ilt % long term elastic moment of intertia   
-        SDst % short term section modoulus         
+%         SDst % short term section modoulus         
         STst % short term section modulus              
         SBst % short term section modulus              
-        SDlt % long term section modulus              
+%         SDlt % long term section modulus              
         STlt % long term section modulus              
         SBlt % long term section modulus     
         ena_loc_st % location of short-term elastic neutral axis
@@ -101,22 +101,22 @@ classdef comp < section
 		function yBlt = get.yBlt(obj)
 		% distance to bottom of section from elastic neutral axis
         %  formula to find centroid: y = sum(Ai*yi)/sum(Ai)
-            yBlt = (obj.Aelt * (obj.ts/2 + obj.dh + obj.d) + ...
-                obj.A * obj.yBcn) / (obj.Alt + obj.A);
+            yBlt = (obj.Alt.*(obj.ts/2 + obj.dh + obj.d) + ...
+                obj.A.*obj.yBnc)./(obj.Alt + obj.A);
 		end
 
 		function yTlt = get.yTlt(obj)
 		% distance of E.N.A. to top of top flange
             if strcmp(obj.ena_loc_lt,'deck')
-                yTlt = obj.Blt - obj.d;
+                yTlt = obj.yBlt - obj.d;
             else
-                yTlt = obj.d - obj.Blt;
+                yTlt = obj.d - obj.yBlt;
             end            
 		end
 
 		function yDlt = get.yDlt(obj)
 		% distance of E.N.A. to top of deck
-            yDlt = obj.D - obj.Blt;            
+            yDlt = obj.D - obj.yBlt;            
 		end
 
 		function Ist = get.Ist(obj)

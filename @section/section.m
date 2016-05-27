@@ -19,7 +19,14 @@ classdef section < matlab.mixin.SetGet
         bf_top % width of top flange [in]
         tf_top % thickness of top flange [in]
         bf_bot % width of bottom flange [in]
-        tf_bot % thickness of bottom flange [in]
+        tf_bot % thickness of bottom flange [in]        
+    end    
+    
+    properties (Dependent = true)   
+        d % total depth of non-composite steel section (wide flange)[in] 
+        Ec % deck modulous [psi] -> 57000*sqrt(fc)      
+        Ix % moments of inertia Ix [in^4]
+        Iy % moment of intertia Iy [in^4]
         A  % section area
         dcNC % depth of web in compression in elastic range [in]
         yTnc % distance to top of section
@@ -29,13 +36,6 @@ classdef section < matlab.mixin.SetGet
         S2 % [in^3] elastic section modulus for secondary axis             
         Z % plastic section modulus        
         ry % effective radius of gyration for lateral torsional buckling 
-    end    
-    
-    properties (Dependent = true)   
-        d % total depth of non-composite steel section (wide flange)[in] 
-        Ec % deck modulous [psi] -> 57000*sqrt(fc)      
-        Ix % moments of inertia Ix [in^4]
-        Iy % moment of intertia Iy [in^4]      
     end    
     
     methods        
@@ -112,29 +112,47 @@ classdef section < matlab.mixin.SetGet
             fprintf('Total fields read: %i. Done. \n',tot);
         end
         
-        function write(obj,fname,tab)
+        function write_xls(obj,fname,tab)
             % fname = fullfile path
             % tab = optional tab for xls sheets
-            if nargin < 3, tab = []; end % error screen null tab
-            names = fieldnames(obj); % get field names
-            dat = names; % data to write
-            % build write table
-            for ii = 1:length(names)
-                dat{ii,2} = obj.(names{ii});
-            end
-            % concat add name/value header
-            dat = [{'NAME', 'VALUE'}; dat];
+            if nargin < 3, tab = 'Sheet1'; end % error screen null tab
+            [name,value] = obj.get_strings(); % serialize data
             fprintf('Writing to file... ');
             % error screen null tab entry (for csv files, etc)
-            if ~isempty(tab)
-                xlswrite(fname,dat,tab);
-            else
-                xlswrite(fname,dat);
-            end
-            fprintf('Done.\n');
+            xlswrite(fname,[name value],tab);
+            fprintf('Done.\n'); 
         end
         
+        function write(obj,fname,del)
+            % low level file write. optional deliminator field
+            % del [comma default]
+            %  options: 
+            %   ',' or 'comma' for comma 
+            %   'tab' 't' or '\t' for tab
+            if nargin < 3, del = ','; end % comma del. default
+            if strcmp(del,'comma'), del = ','; end
+            if strcmp(del,'t') || strcmp(del,'tab'), del = '\t'; end 
+            tk = 0; % write counter
+            [name,value]= obj.get_strings();
+            fprintf('Writing to file... ');
+            fid = fopen(fname,'w');
+            for ii = 1:length(name)
+                fprintf(fid,sprintf('%s%s%s\n',name{ii},del,value{ii}));
+                tk = tk+1;
+            end
+            fclose(fid);
+            fprintf('Done. Total fields written: %i.\n',tk);
+        end            
         
+        function [name,value] = get_strings(obj)
+            % raw{1,1} = {'fieldname1','value1'};
+            name = fieldnames(obj);
+            value = cell(size(name));
+            for ii = 1:length(name)
+                value{ii} = num2str(obj.(name{ii}));
+            end
+        end
+                
         %% -- dependent methods -- %
         function d = get.d(obj)
         % full depth of steel section
@@ -185,17 +203,17 @@ classdef section < matlab.mixin.SetGet
         
         function STnc = get.STnc(obj)
         % elastic section modulus, top
-            STnc = obj.Ix/obj.yTnc;
+            STnc = obj.Ix./obj.yTnc;
         end
         
         function SBnc = get.SBnc(obj)
         % elastic section modulus, bottom
-            SBnc = obj.Ix/obj.yBnc;
+            SBnc = obj.Ix./obj.yBnc;
         end
         
         function S2 = get.S2(obj)
         % elastic section modulus for seconcary axis
-            S2 = obj.Iy/(obj.bf_bot/2);
+            S2 = obj.Iy./(obj.bf_bot/2);
         end
         
         function ry = get.ry(obj)
@@ -206,21 +224,18 @@ classdef section < matlab.mixin.SetGet
         
         function Z = get.Z(obj)
         % plastic section modulus
-            flangeAc = obj.bf_bot * obj.tf_bot;
-            flangeYc = obj.tf_bot/2 * obj.dw/2;
+            flangeAc = obj.bf_bot.*obj.tf_bot;
+            flangeYc = obj.tf_bot/2 + obj.dw/2;
             webAc = obj.tw * obj.dw/2;
-            webYc = obj.dw/2;
-            
-            flangeAt = obj.bf_top * obj.tf_top;
-            flangeYt = obj.tf_top/2 + obj.dw/2;
-            
-            webAt = obj.tw * obj.dw/2;
-            webYt = obj.dw/2;
-            
-            Z = (flangeAc * flangeYc) + (webAc * webYc) + ...
-                (flangeAt * flangeYt) + (webAt * webYt);
-        
+            webYc = obj.dw/2;           
+            flangeAt = obj.bf_top.*obj.tf_top;
+            flangeYt = obj.tf_top/2 + obj.dw/2;          
+            webAt = obj.tw*obj.dw/2;
+            webYt = obj.dw/2;            
+            Z = (flangeAc.*flangeYc) + (webAc*webYc) + ...
+                (flangeAt.*flangeYt) + (webAt*webYt);        
         end
+        
     end    
     
     	%% -- internal methods -- %
