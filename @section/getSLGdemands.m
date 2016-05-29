@@ -9,6 +9,9 @@ function d = getSLGdemands(s)
     nSpans = s.nSpans;
     Es = s.Es; %[psi]
     TotalLength = s.L/12*nSpans; % in -> ft
+    d.wDL = s.wDL;
+    d.wSDL = s.wSDL;
+    d.wSDW = s.wSDW;
 
     for ii = 1:nSpans
         SpanLength(ii) = round(s.L/12)'; % in -> ft
@@ -18,7 +21,6 @@ function d = getSLGdemands(s)
     nNode = nElem + 1; % number of nodes along entire length
     nDOF = nNode*2; % number of DOFs (deflection/rotation at each node)
 
-
     %% Assemble in global stiffness matrix
     % assumimg unit/dimensionless I - in lb/in^5
     l = 12; % [inches], length of beam elements, default discretization
@@ -26,7 +28,7 @@ function d = getSLGdemands(s)
     k = Es/l^3* [12,  6*l,   -12,  6*l;
                 6*l, 4*l^2, -6*l, 2*l^2;
                 -12, -6*l,  12,   -6*l;
-                6*l, 2*L^2, -6*l, 4*l^2];
+                6*l, 2*l^2, -6*l, 4*l^2];
 
     % Pre-allocate global stiffness matrix
     K = zeros(nDOF);
@@ -40,8 +42,8 @@ function d = getSLGdemands(s)
     %% Apply Boundary Conditions
     
     % Determine nodes with fixed DOFs 
-    Fixed = zeros(Spans, 1);
-    for ii = 1:Spans
+    Fixed = zeros(nSpans, 1);
+    for ii = 1:nSpans
         Fixed(ii) = sum(SpanLength(1:ii));
     end
     Fixed = [1; 2*Fixed + 1];
@@ -139,14 +141,14 @@ function d = getSLGdemands(s)
     % Continuous spans: Positive moment at midspan for interior spans and 0.4L
     % at exterior spans. Negative moment and shear over supports
 
-    for i=1:Spans
+    for i=1:nSpans
         range = (Fixed(i)+1)/2:(Fixed(i+1)+1)/2;
         % POI
-        if Spans == 1
+        if nSpans == 1
             POI = round(0.5*(range(end)-range(1)))+range(1);
         elseif i == 1 
             POI = round(0.4*(range(end)-range(1)))+range(1);
-        elseif i == Spans 
+        elseif i == nSpans 
             POI = round(0.6*(range(end)-range(1)))+range(1);
         else
             POI = round(0.5*(range(end)-range(1)))+range(1);

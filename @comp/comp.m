@@ -22,11 +22,9 @@ classdef comp < section
         yTlt % distance of E.N.A. to top of top flange
         yDlt % distance of E.N.A. to top of deck      
         Ist % short term elastic moment of inertia 
-        Ilt % long term elastic moment of intertia   
-%         SDst % short term section modoulus         
+        Ilt % long term elastic moment of intertia         
         STst % short term section modulus              
-        SBst % short term section modulus              
-%         SDlt % long term section modulus              
+        SBst % short term section modulus                      
         STlt % long term section modulus              
         SBlt % long term section modulus     
         ena_loc_st % location of short-term elastic neutral axis
