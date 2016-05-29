@@ -19,7 +19,10 @@ classdef section < fileio
         bf_top % width of top flange [in]
         tf_top % thickness of top flange [in]
         bf_bot % width of bottom flange [in]
-        tf_bot % thickness of bottom flange [in]        
+        tf_bot % thickness of bottom flange [in]       
+        wDL % nonsuperimposed deadload [lb]
+        wSDL % superimposed deadload [lb]
+        wSDW % wearing surface deadload [lb]
     end    
     
     properties (Dependent = true)   

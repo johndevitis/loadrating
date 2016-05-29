@@ -6,9 +6,11 @@ ref/
 # zip files
 *.zip
 
-# matlab autosave files
+# matlab files
 *.asv
+*.mat
 
+# any temporary files
 *.tmp
 
 # ms office tmp files
