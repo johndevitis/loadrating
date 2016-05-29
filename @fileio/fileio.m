@@ -5,9 +5,6 @@ classdef fileio < matlab.mixin.SetGet
 
 	%% -- object properties -- %%
 	properties
-        path = 'C:\Temp' % root path  
-        name = 'foo'     % class name 
-        ext = 'm'        % matlab ext
 	end
 
 	%% -- dependent properties -- %%
@@ -139,13 +136,6 @@ classdef fileio < matlab.mixin.SetGet
 
 	%% -- internal methods -- %%
 	methods (Access = private)
-        
-        function chk_name(obj)
-        % error screen null name entry
-            if isempty(obj.name)
-                error('Name that thang.')
-            end
-        end
         
         function fid = open(obj,perm)
         % open file with error screening capability. 

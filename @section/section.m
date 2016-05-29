@@ -1,4 +1,4 @@
-classdef section < matlab.mixin.SetGet
+classdef section < fileio
 %% classdef section 
 % author: jdv
 % date: 04232015 
@@ -124,8 +124,7 @@ classdef section < matlab.mixin.SetGet
             webYt = obj.dw/2;            
             Z = (flangeAc.*flangeYc) + (webAc*webYc) + ...
                 (flangeAt.*flangeYt) + (webAt*webYt);        
-        end
-        
+        end        
     end    
     
     	%% -- internal methods -- %

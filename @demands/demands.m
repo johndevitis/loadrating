@@ -1,4 +1,4 @@
-classdef demands
+classdef demands < section
 %% classdef demands
 % author: 
 % date: 17-May-2016 12:45:05
