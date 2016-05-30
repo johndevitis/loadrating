@@ -5,14 +5,15 @@ classdef lrfr < section
 
 	%% -- object properties -- %%
 	properties
-        Mn_Strength1Pos % 
-        Fn_Strength1Pos % 
-        Fn_Service2Pos % 
-        Vn % 
+        location = 'positive' % determine compression/tension flange
 	end
 
 	%% -- dependent properties -- %%
 	properties (Dependent)
+        Mn_Strength1Pos % 
+        Fn_Strength1Pos % 
+        Fn_Service2Pos % 
+        Vn % 
 	end
 
 	%% -- developer properties -- %%
