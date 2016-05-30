@@ -27,7 +27,7 @@ classdef fileio < matlab.mixin.SetGet
             % name/value indices -> 1, 2
             % error screens null tab entry, i.e. tab input is optional
             % autocorrects missing file extension
-            fname = chk_ext(fname,'.xlsx');
+            fname = obj.chk_ext(fname,'.xlsx');
             if nargin < 3, tab = 'Sheet1'; end
             names = fieldnames(obj);
             nInd = 1; % name index

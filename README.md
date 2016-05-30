@@ -15,3 +15,9 @@ git clone https://github.com/johndevitis/loadrating
 This will automatically create a folder named `loadrating` in the parent directory and download the contents of the remote repository to your local machine. From here, you have an up to date snapshot of the entire project and can begin using/exploring.
 
 If you are new to Git, I highly recommend reviewing the [manual](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control) or [cheatsheet](https://services.github.com/kit/downloads/github-git-cheat-sheet.pdf)
+
+## To start using
+### Example1
+example1.m shows how to programmatically set up the working environment and name spaces of the project as well as read/write properties using the section class. section is subclassed by filio, thus, it inherets all of the functionality contained in the file @fileio/fileio.m
+
+
