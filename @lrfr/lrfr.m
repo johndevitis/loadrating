@@ -1,4 +1,4 @@
-classdef lrfr < section
+classdef lrfr 
 %% classdef lrfr
 % author: 
 % create date: 24-May-2016 21:43:12

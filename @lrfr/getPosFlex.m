@@ -1,6 +1,6 @@
 function r = getPosFlex(s,d)
 % r = getPosFlex(s,d)
-
+%
 % *This version does not support negative haunch depths
 %
 % returned rating structure, r, contains:
