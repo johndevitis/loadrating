@@ -1,4 +1,6 @@
-%% example1 - demonstrate section input/output capabilities
+%% example1 - section_readwrite
+%
+% demonstrate section input/output capabilities
 %
 % example1 shows how to programmatically set up the working environment and 
 % name spaces of the project as well as read/write properties using the 
