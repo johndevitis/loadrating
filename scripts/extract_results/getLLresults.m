@@ -6,8 +6,8 @@ function [M1,P,V] = getLLresults(model,res,lcName,beamNums)
     % mine result log file for load case names
     lcnames = getLoadCaseNames(res.logpath);
 
-    % get load case numbers for flexure
-    [lcNumsFlex,lcNumsShear] = get_lc_nums(lcName,lcnames,beamNums);
+    % get load case numbers for flexure and shear
+    [lcNumsFlex,lcNumsShear] = get_lcNums(lcName,lcnames,beamNums);
 
     % check for no matches
     if isempty(lcNumsFlex) || isempty(lcNumsShear)
@@ -17,7 +17,7 @@ function [M1,P,V] = getLLresults(model,res,lcName,beamNums)
 end
 
 
-function [lcNumsFlex,lcNumsShear] = get_lc_nums(lcName,lcnames,beamNums)
+function [lcNumsFlex,lcNumsShear] = get_lcNums(lcName,lcnames,beamNums)
 %%
 % searches cell array of load case names and finds each paired load case
 % number for the desired array of beamNums.
@@ -43,6 +43,7 @@ function [lcNumsFlex,lcNumsShear] = get_lc_nums(lcName,lcnames,beamNums)
     % Get result case numbers
     for ii = 1:length(beamNums)    
         for jj = 1:length(quantifier)        
+            % look for beam End 1 first
             try
                 % flexure
                 resultCaseName = ['Beam(' num2str(beamNums(ii)) ') End 1 ' flexFlag...
@@ -53,6 +54,7 @@ function [lcNumsFlex,lcNumsShear] = get_lc_nums(lcName,lcnames,beamNums)
                     ' [' lcName '] (' quantifier{jj} ' Response)'];
                 lcNumsShear(ii,jj) = find(strcmp(lcnames,resultCaseName));
             catch
+                % look for beam End 2 next
                 try
                     % flexure
                     resultCaseName = ['Beam(' num2str(beamNums(ii)) ') End 2 ' flexFlag...
@@ -61,12 +63,12 @@ function [lcNumsFlex,lcNumsShear] = get_lc_nums(lcName,lcnames,beamNums)
                     % shear
                     resultCaseName = ['Beam(' num2str(beamNums(ii)) ') End 2 ' shearFlag...
                         ' [' lcName '] (' quantifier{jj} ' Response)'];
-                    lcNumsFlex(ii,jj) = find(strcmp(lcnames,resultCaseName));
+                    lcNumsShear(ii,jj) = find(strcmp(lcnames,resultCaseName));
                 catch
                     continue
                 end
             end        
-        end    
+        end
     end
 end
 
