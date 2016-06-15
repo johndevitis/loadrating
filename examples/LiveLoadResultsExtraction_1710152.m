@@ -16,7 +16,7 @@
 %
 %
 % created by NR
-% refacted by jdv 06152016
+% refactored by jdv 06152016
 
 %% inputs
 
@@ -36,37 +36,19 @@ res.logpath = [res.fullpath(1:end-1) 'L']; % .LSL log file path found using .LSA
 %  note: all standard lc names are in ~/data/brp load case names.txt
 lcName = 'LRFR HL-93'; 
 
-% Define load case identifiers for each location of interest
-response = 'SF2';
-quantifier = {'Min';'Max'};
 
-%% mine result log file for load case names
-
-resultCases = getLoadCaseNames(res.logpath);
 
 %% load beam 
 
-beamNums = [45 129];
+beamNums = [3 45 129];
 
-%% Get result case numbers
-for ii = 1:size(beamNums,1)    
-    for jj = 1:length(quantifier)        
-        % Get beam element number
-        beamNum = beamNums(ii);
-        try
-            resultCaseName = ['Beam(' num2str(beamNum) ') End 1 ' response...
-                ' [' loadCaseName '] (' quantifier{jj} ' Response)'];
-            resultCases(ii,jj) = find(strcmp(ResCaseNames,resultCaseName));
-        catch
-            try
-                resultCaseName = ['Beam(' num2str(beamNum) ') End 2 ' response...
-                    ' [' loadCaseName '] (' quantifier{jj} ' Response)'];
-                resultCases(ii,jj) = find(strcmp(ResCaseNames,resultCaseName));
-            catch
-                continue
-            end
-        end        
-    end    
+%% 
+
+getLLresults(model,res,lcName,beamNums)
+
+clc
+for ii = 1:length(lcnames)
+   fprintf('%s %s\n',num2str(ii),lcnames{ii});
 end
 
 %% get beam results

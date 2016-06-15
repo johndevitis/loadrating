@@ -48,4 +48,8 @@ lcnames = regexp(matches,'(?<=")(.*?)+(?=")','match');
 % close file
 fclose(fid);
 
+% unnest nested cell arrays
+lcnames = [lcnames{:}];
+
 end
+
