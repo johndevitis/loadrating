@@ -1,8 +1,8 @@
 function St7OpenModelFile(uID, PathName, FileName, ScratchPath)
 % error screen missing file extension
-if isempty(regexp(Filename,'.st7'))
+if isempty(regexp(FileName,'.st7'))
    % ext missing, add
-   FileName = [Filename '.st7'];   
+   FileName = [FileName '.st7'];   
 end
 % call fullfile to sort path\name conflicts
 ModelPathName = fullfile(PathName, FileName);
