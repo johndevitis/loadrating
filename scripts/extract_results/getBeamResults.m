@@ -6,24 +6,39 @@ function getBeamResults(model,res,lcNums,beamNums)
 % 
 % jdv 06152016
 
-    uID = 1;         % st7 model id
-    InitializeSt7(); % load api
+    %-- API Execution Wrapper --%
+    try
+        % load libs and model
+        uID = 1;         % st7 model id
+        InitializeSt7(); % load api           
+        St7OpenModelFile(uID, model.path, model.name, model.scratch)
 
-    % Open model file
-    St7OpenModelFile(uID, model.path,model.name,model.scratch)
+        % open result file
+        St7OpenResultFile(uID, res.fullpath)
+        
+        % get beam info
+        [propNum,propName] = getBeamInfo(uID, beamNums);
+        
+        % get beam results
+        results = getResults();
 
-    % Open result file
-%     St7OpenResultFile(uID, res.fullpath)
-
-    % loop beam numbers
-    for ii = 1:length(beamNums)
-        % loop columns for min and max
-        for jj = 1:size(lcNums,2)
-            [proprNum,propName] = getBeamInfo(uID,beamNums(ii))
+        % loop beam numbers
+        for ii = 1:length(beamNums)
+            % loop columns for min and max
+            for jj = 1:size(lcNums,2)
+                [proprNum,propName] = getBeamInfo(uID,beamNums(ii))
+            end
         end
+        % Close and Unload
+        CloseAndUnload(uID);
+        
+    catch
+        % force close errthang
+        fprintf('Force close!\n');
+        CloseAndUnload(uID);
+        rethrow(lasterror);
     end
-    % Close and Unload
-    CloseAndUnload(uID);
+end
 
             
 %             % Get Beam Element Results
@@ -44,7 +59,6 @@ function getBeamResults(model,res,lcNums,beamNums)
 %     P = max(abs(beamResults(1,:)),abs(beamResults(7,:)))';
 %     V = max(abs(beamResults(5,:)),abs(beamResults(9,:)))';
 
-end
 
 function [propNum,propName] = getBeamInfo(uID,bnum)
 % get beam info from beam number
