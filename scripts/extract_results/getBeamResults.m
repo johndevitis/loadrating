@@ -16,12 +16,9 @@ function getBeamResults(model,res,lcNums,beamNums)
         % open result file
         St7OpenResultFile(uID, res.fullpath)
         
-        % get beam info
-        [propNum,propName] = getBeamInfo(uID, beamNums);
+%         % get beam info
+%         [propNum,propName] = getBeamInfo(uID, beamNums);
         
-        % get beam results
-        results = getResults();
-
         % loop beam numbers
         for ii = 1:length(beamNums)
             % loop columns for min and max
@@ -41,6 +38,22 @@ function getBeamResults(model,res,lcNums,beamNums)
 end
 
             
+function [propNum,propName] = getBeamInfo(uID,bnum)
+% get beam info from beam number
+    global tyBEAM ptBEAMPROP
+    
+    % get beam property number
+    [iErr,propNum] = calllib('St7API', 'St7GetElementProperty',uID,tyBEAM,...
+        bnum,1);
+    HandleError(iErr);
+    
+    % get beam prop name
+    [iErr,propName] = calllib('St7API','St7GetPropertyName',uID, ptBEAMPROP,...
+        propNum,'',50);
+    HandleError(iErr);    
+end
+
+
 %             % Get Beam Element Results
 %             if lcNums.Flex(ii,jj) ~= 0
 %                 beamRes(:,jj) = St7GetBeamEndResults(uID, beamNum, resultCaseNum);
@@ -58,26 +71,6 @@ end
 %     M1 = max(abs(beamResults(4,:)),abs(beamResults(10,:)))';
 %     P = max(abs(beamResults(1,:)),abs(beamResults(7,:)))';
 %     V = max(abs(beamResults(5,:)),abs(beamResults(9,:)))';
-
-
-function [propNum,propName] = getBeamInfo(uID,bnum)
-% get beam info from beam number
-    global tyBEAM ptBEAMPROP
-    
-    % get beam property number
-    [iErr,propNum] = calllib('St7API', 'St7GetElementProperty',uID,tyBEAM,...
-        bnum,1);
-    HandleError(iErr);
-    
-    % get beam prop name
-    [iErr,propName] = calllib('St7API','St7GetPropertyName',uID, ptBEAMPROP,...
-        propNum,'',50);
-    HandleError(iErr);    
-end
-
-
-
-
 
 
 
