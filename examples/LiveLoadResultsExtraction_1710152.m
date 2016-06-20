@@ -21,7 +21,7 @@
 %% inputs
 
 % model info
-model.path = 'C:\Users\John\Desktop\brp\1710152';       
+model.path = 'C:\Users\John\Desktop\brp\1710152';     
 model.name = '1710152_LiftSpan_apriori_LRFR_HL93.st7';    
 model.scratch = 'C:\Temp'; % make sure this exists on your computer
 model.fullpath = fullfile(model.path,model.name); % get full path
