@@ -20,5 +20,3 @@ If you are new to Git, I highly recommend reviewing the [manual](https://git-scm
 
 ## Examples
 
-### Example1
-example1.m shows how to programmatically set up the working environment and name spaces of the project as well as read/write properties using the section class. section is subclassed by filio, thus, it inherets all of the functionality contained in the file @fileio/fileio.m
