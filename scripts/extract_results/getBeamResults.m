@@ -1,4 +1,4 @@
-function results = getBeamResults(model,res,lcNums,beamNums)
+function results = getBeamResults(model,res,beamNums,lcNums)
 %%
 %
 % returns:
@@ -32,20 +32,25 @@ function results = Main(uID,model,res,lcNums,beamNums)
     % loop beam numbers
     for ii = 1:length(beamNums)
         % call api fcns
-        [propNum,propName] = getBeamInfo(uID,beamNums(ii));
+        [propNum,propName,sectionName] = getBeamInfo(uID,beamNums(ii));
         
         % save to results
         results.beamNum{ii} = beamNums(ii);
         results.propNum{ii} = propNum;
         results.propName{ii} = propName;
+        results.sectionName{ii} = sectionName;
     end
     
     % Close and Unload
     CloseAndUnload(uID);        
 end
 
-function [propNum,propName] = getBeamInfo(uID,bnum)
-    % get beam info from beam number
+function extractResults(uID,bnum,lcnum)
+end
+
+function [propNum,propName,sectionName] = getBeamInfo(uID,bnum)
+% get property number, property name, and section name from beam number
+
     global tyBEAM ptBEAMPROP
     
     % get beam property number
@@ -54,11 +59,16 @@ function [propNum,propName] = getBeamInfo(uID,bnum)
     HandleError(iErr);
     
     % get beam prop name
-    maxLen = 128;
-    propName = char(ones(1,maxLen));
+    maxLen = 128; % max length of name
+    propName = char(ones(1,maxLen)); % preallocate (don't use zeros!)
     [iErr,propName] = calllib('St7API','St7GetPropertyName',uID, ptBEAMPROP,...
-    propNum,propName,maxLen);
-    HandleError(iErr);   
+        propNum,propName,maxLen);
+    HandleError(iErr);       
     
+    % get beam section name
+    sectionName = char(ones(1,maxLen)); % pre-al
+    [iErr,sectionName] = calllib('St7API','St7GetBeamSectionName',uID,...
+        propNum,sectionName,maxLen);
+    HandleError(iErr);
 end
 

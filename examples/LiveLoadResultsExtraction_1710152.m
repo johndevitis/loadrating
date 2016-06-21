@@ -64,7 +64,7 @@ shear.lcNums = getLoadCaseNums(shear.truckType,lcnames,shear.beamNums,shear.flag
 %% api
 
 % get beam results
-results = getBeamResults(model,res,flex.lcNums,flex.beamNums)
+results = getBeamResults(model,res,flex.beamNums,flex.lcNums)
 
 
 
