@@ -57,14 +57,14 @@ function results = Main(uID,model,res,lcNums,beamNums)
         % filter results for beam ii
         [M,P,V] = filterBeamResults(beamResults);
 
-
+        % save to results struct
         results.M(ii,1) = M;
         results.P(ii,1) = P;
         results.V(ii,1) = V;
         
     end
     
-    % Close and Unload
+    % Close all and unload library
     CloseAndUnload(uID);        
 end
 

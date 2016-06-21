@@ -21,8 +21,8 @@
 %% inputs
 
 % model info
-% model.path = 'C:\Users\John\Desktop\brp\1710152';     
-model.path = 'C:\Users\John\Desktop\brp';     
+model.path = 'C:\Users\John\Desktop\brp\1710152';     
+% model.path = 'C:\Users\John\Desktop\brp';     
 model.name = '1710152_LiftSpan_apriori_LRFR_HL93.st7';    
 model.scratch = 'C:\Temp'; % make sure this exists on your computer
 model.fullpath = fullfile(model.path,model.name); % get full path
@@ -33,11 +33,8 @@ res.name = '1710152_LiftSpan_apriori_LRFR_HL93.LSA';
 res.fullpath = fullfile(res.path,res.name); % get full path
 res.logpath = [res.fullpath(1:end-1) 'L']; % .LSL log file path found using .LSA fullpath
 
-for ii = 1:size(aa,1)
-    max(abs([min(aa(ii,:)) max(aa(ii,:))]))
-end
- 
-%% get vector of beam numbers 
+
+%% setup rating structure
 
 % flexure info
 flex.beamNums = [45 129 187];
@@ -53,10 +50,7 @@ shear.truckType = 'LRFR HL-93';
 %% mine log file 
 
 % mine result log file for load case names
-lcNames = getLoadCaseNames(res.logpath);
-
-% save to results struct
-res.lcNames = lcnames;
+res.lcNames = getLoadCaseNames(res.logpath);
 
 % get load case numbers for flexure and shear
 % TODO: make work for dead load
