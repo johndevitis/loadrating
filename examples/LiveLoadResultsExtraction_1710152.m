@@ -21,7 +21,8 @@
 %% inputs
 
 % model info
-model.path = 'C:\Users\John\Desktop\brp\1710152';     
+% model.path = 'C:\Users\John\Desktop\brp\1710152';     
+model.path = 'C:\Users\John\Desktop\brp';     
 model.name = '1710152_LiftSpan_apriori_LRFR_HL93.st7';    
 model.scratch = 'C:\Temp'; % make sure this exists on your computer
 model.fullpath = fullfile(model.path,model.name); % get full path
@@ -63,7 +64,7 @@ shear.lcNums = getLoadCaseNums(shear.truckType,lcnames,shear.beamNums,shear.flag
 %% api
 
 % get beam results
-getBeamResults(model,res,flex.lcNums,flex.beamNums)
+results = getBeamResults(model,res,flex.lcNums,flex.beamNums)
 
 
 
