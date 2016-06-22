@@ -33,32 +33,35 @@ res.name = '1710152_LiftSpan_apriori_LRFR_HL93.LSA';
 res.fullpath = fullfile(res.path,res.name); % get full path
 res.logpath = [res.fullpath(1:end-1) 'L']; % .LSL log file path found using .LSA fullpath
 
-% Define load Case name
-%  note: all standard lc names are in ~/data/brp load case names.txt
-
-
-
-
+for ii = 1:size(aa,1)
+    max(abs([min(aa(ii,:)) max(aa(ii,:))]))
+end
+ 
 %% get vector of beam numbers 
 
 % flexure info
 flex.beamNums = [45 129 187];
 flex.flag = 'BM2'; % load case name flag
-flex.truckType = 'LRFR HL-93'; 
+flex.truckType = 'LRFR HL-93'; % TODO: change to load caes so it works for dl
 
 % shear info
 shear.beamNums = [3 87 1 2];
 shear.flag = 'SF2'; % load case name flag
 shear.truckType = 'LRFR HL-93'; 
 
+
 %% mine log file 
 
 % mine result log file for load case names
-lcnames = getLoadCaseNames(res.logpath);
+lcNames = getLoadCaseNames(res.logpath);
+
+% save to results struct
+res.lcNames = lcnames;
 
 % get load case numbers for flexure and shear
-flex.lcNums = getLoadCaseNums(flex.truckType,lcnames,flex.beamNums,flex.flag);
-shear.lcNums = getLoadCaseNums(shear.truckType,lcnames,shear.beamNums,shear.flag);
+% TODO: make work for dead load
+flex.lcNums = getLoadCaseNums(flex.truckType,lcNames,flex.beamNums,flex.flag);
+shear.lcNums = getLoadCaseNums(shear.truckType,lcNames,shear.beamNums,shear.flag);
 
 
 %% api
