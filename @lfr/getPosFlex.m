@@ -1,5 +1,11 @@
-function getPosFlex(r,s,d)
+function getPosFlex(r,s,sNeg,d)
 %% LFR Positive Flexure 
+%
+% r -> lfr rating structure, implicit w/ dot notation
+% s -> section class for positive flexure rating
+% sNeg -> corresponding section class for negative rating region (this is
+% required for LFR positive flexure ratings 
+% d-> demands structure
 %
 % References: 
 %   MBE Section 6 Appendix L6B
@@ -17,10 +23,10 @@ function getPosFlex(r,s,d)
     tf_bPos = s.tf_bot;
     bf_bPos = s.bf_bot;
     if Spans > 1
-        tf_tNeg  = s.tf_top;
-        bf_tNeg  = s.bf_top;
-        tf_bNeg = s.tf_bot;
-        bf_bNeg = s.bf_bot;
+        tf_tNeg  = sNeg.tf_top;
+        bf_tNeg  = sNeg.bf_top;
+        tf_bNeg = sNeg.tf_bot;
+        bf_bNeg = sNeg.bf_bot;
     end
     ts = s.ts; 
     STnc = s.STnc(1);

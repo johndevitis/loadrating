@@ -24,10 +24,13 @@ c = comp();
 c.read_csv('sectionprops_pos.csv');
 
 % get single line girder [SLG] demands w/ section method
+% note: details of the demands structure can be found in getSLGdemands. in
+% later versions it will be refactored into a class, but for now this works
+% fine
 d = c.getSLGdemands();
 
 % create instance of lrfr rating structure
-r = lrfr()
+r = lrfr();
 
 % positive flexure resistance
 r.getPosFlex(c,d)
@@ -42,5 +45,8 @@ c.read_csv('sectionprops_neg.csv');
 % rating
 r = lrfr();
 r.region = 'neg'; % change from 'pos' default
-r.getShear(c) % shear
-r.getNegFlex(c) % negative flexure 
+r.getShear(cNeg) % shear
+r.getNegFlex(cNeg) % negative flexure 
+
+
+
