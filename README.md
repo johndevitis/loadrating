@@ -23,9 +23,8 @@ If you are new to Git, I highly recommend reviewing the [manual](https://git-scm
 
 # to do
 
-* lrfr
-	* check the pos/neg swap in getShear
+* check for non-composite capacity calcs
+
 * lfr
 	* fix lateral torsional buckling moment calculation in LFR getNegFlex (completely broken)
-  * check double negative logic in LFR getPosFlex() - can negative compact check be removed?
-  * check getPosFlex line 70, Mu_pos assigned, should be Mu_StrengthPos?
+  * change Mu -> Mn to be consistent w/ aashto documentation
