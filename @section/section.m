@@ -4,8 +4,8 @@ classdef section < fileio
 % date: 04232015 
     properties
         nSpans % number of spans
-        loc % longitudinal girder location [interior/exterior]
-        panel % panel location [interior/end]
+        trans_loc % longitudinal girder location [interior/exterior]
+        panel % panel location of section [interior/end]
         L % span length [in]
         Lb % max unbraced length [in]
         Es % young's modulus, steel [psi]

@@ -1,10 +1,9 @@
-function [Vn,Vp] = getShear(s,panel,location)
-% [Vn, Vp] = getShear(s,panel,location)
+function getShear(r,s)
+%%
 %
 % Inputs: 
-%  s - section properties
-%  panel - interior/end 
-%  location - pos/neg - to determine tension/compression flanges
+%  s - composite section class
+%  r - lrfr rating class
 %
 % Outputs: 
 %  Vn % shear resistance
@@ -15,34 +14,43 @@ function [Vn,Vp] = getShear(s,panel,location)
     tw = s.tw;
     tf_top  = s.tf_top(1);
     bf_top  = s.bf_top(1);
-    tf_bottom = s.tf_bottom(1);
-    bf_bottom = s.bf_bottom(1);
+    tf_bot = s.tf_bot(1);
+    bf_bot = s.bf_bot(1);
     E = s.Es;
     Fy = s.Fy;
     Lb = s.Lb;
+    region = r.region;
+    
+    if isempty(s.panel)
+        fprintf('Assign panel location of section [interior/end]\n');
+        return
+    end
+    panel = s.panel;
 
     % Determine compression/tension flange
-    if strcmp(lower(location),'positive') || strcmp(lower(location),'pos')
+    %  c/t flanges swap between pos and neg rating regions due to negative
+    %  moment above pier
+    if strcmp(lower(region),'positive') || strcmp(lower(region),'pos')
         bfc = bf_top; % width compression flange
         tfc = tf_top; % thickness compression flange
-        bft = bf_bottom; % width tension flange
-        tft = tf_bottom; % thickness tension flange
-    elseif strcmp(lower(location),'negative') || strcmp(lower(location),'neg')
-        bfc = bf_bottom; % width compression flange
-        tfc = tf_bottom; % thickness compression flange
+        bft = bf_bot; % width tension flange
+        tft = tf_bot; % thickness tension flange
+    elseif strcmp(lower(region),'negative') || strcmp(lower(region),'neg')
+        bfc = bf_bot; % width compression flange
+        tfc = tf_bot; % thickness compression flange
         bft = bf_top; % width tension flange
         tft = tf_top; % thickness tension flange
     end
 
     % Web stiffened? (6.10.9.1)
     if Lb <= 3*dw % Section is "stiffened"
-        webStiffened = 1;
+        r.webStiffened = 1;
     else
-        webStiffened = 0;
+        r.webStiffened = 0;
     end
 
     % Shear buckling coefficient, k = 5 (for unstiffened webs)
-    if webStiffened
+    if r.webStiffened
         k = 5 + (5/(Lb/dw)^2); % (6.10.9.3.2-7)
     else
         k = 5;
@@ -61,9 +69,9 @@ function [Vn,Vp] = getShear(s,panel,location)
     % Plastic shear force
     Vp = 0.58*Fy*dw*tw; % (6.10.9.3.2-3)
 
-    if webStiffened
+    if r.webStiffened
         % For Stiffened webs (6.10.9.3)
-        if strcmp(panel, 'interior')
+        if strcmp(panel, 'interior') || strcmp(panel, 'int')
             if (2*dw*tw)/(bfc*tfc + bft*tft) <= 2.5 % (6.10.9.3.2-1)
                 Vn = Vp*(C+((0.87*(1-C))/sqrt(1+(Lb/dw)^2))); % (6.10.9.3.2-2)
             else
@@ -75,8 +83,11 @@ function [Vn,Vp] = getShear(s,panel,location)
     else    
         % For unstiffened webs (6.10.9.2)
         Vn = C*Vp;   
-    end
+    end    
     
+    % assign to rating struct
+    r.Vp = Vp;
+    r.Vn = Vn; 
 
 end
 

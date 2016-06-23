@@ -1,19 +1,32 @@
-classdef lrfr 
+classdef lrfr < matlab.mixin.SetGet 
 %% classdef lrfr
 % author: 
 % create date: 24-May-2016 21:43:12
 
 	%% -- object properties -- %%
 	properties
-        location = 'positive' % determine compression/tension flange
+        % input
+        region = 'pos' % determine compression/tension flange
+        Rh = 1.0; % Hybrid factor (AASHTO LRFD Section 6.10.1.10.1)
+        Rb = 1.0; % Web Load-Shedding Factor (6.10.1.10.2)
+        composite = 1; % composite/non-composite boolean 
+        
+        % results
+        webStiffened % web stiffened boolean 
+        ductility % ductile boolean
+        compact % compact/non-compact boolean
+        Mn_Strength1Pos % 
+        Fn_Strength1Pos % 
+        Fn_Service2Pos % 
+        Fn_Strength1Neg %
+        Fn_Service2Neg %
+        Vn % shear resistance
+        Vp % plastic shear force
 	end
 
 	%% -- dependent properties -- %%
 	properties (Dependent)
-        Mn_Strength1Pos % 
-        Fn_Strength1Pos % 
-        Fn_Service2Pos % 
-        Vn % 
+
 	end
 
 	%% -- developer properties -- %%
@@ -32,7 +45,7 @@ classdef lrfr
 	end
 
 	%% -- static methods -- %%
-	methods (Static)
+	methods (Static)        
 	end
 
 	%% -- internal methods -- %%

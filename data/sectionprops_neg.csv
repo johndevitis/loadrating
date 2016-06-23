@@ -1,0 +1,20 @@
+name,value,unit,desc
+nSpans,2,int,Number of spans
+panel,int,string, Panel location of section [interior/end]
+L,1428,in,Span Length
+Lb,60,in,Max unbraced Length
+Es,29000000,psi,Steel Modulous
+Fy,36000,psi,Steel Yield Strength
+fc,4000,psi,Concrete Strength
+ts,8.5,in,Deck Thickness
+be,92,in,Effective Width
+dh,4,in,Haunch Depth
+dw,78,in,Web Depth
+tw,0.5625,in,Web Thickness
+bf_top,18,in,Top Flange Width
+tf_top,2.25,in,Top Flange Thickness
+bf_bot,18,in,Bottom Flange Width
+tf_bot,2.25,in,Bottom Flange Thickness
+wDL,109,lb,NonSuperimposed DL
+wSDL,12,lb,Superimposed DL
+wSDW,14,lb,Wearing DL

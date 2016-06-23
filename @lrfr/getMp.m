@@ -1,9 +1,10 @@
-function [Mp, Dpst, Dcp, id] = getMp(s)
+function [Mp, Dpst, Dcp, id] = getMp(r,s)
 %%
-% Determine Plastic Moment: AASHTO LRFD Manual Appendix D6
+% Determine Plastic Moment of Composite Seection
+%  - AASHTO LRFD Manual Appendix D6
 %
 % Plastic forces in steel portions of the cross-section are calculated
-% using hte yield strengths of the flanges, web, and reinforcing steel, as
+% using the yield strengths of the flanges, web, and reinforcing steel, as
 % appropriate. 
 %
 % Compressive stress = 0.85f'c
@@ -15,14 +16,20 @@ function [Mp, Dpst, Dcp, id] = getMp(s)
 % Dcp - depth of the web in compression at the plastic moment
 % id - integer case identifier per Table D6.1-1 for PNA location
 
+    % ensure section is composite
+    if ~r.composite
+        fprintf('Section not composite \n');
+        return
+    end
+    
     % Define Variables
     Fy = s.Fy; % Yeild Strength of flanges and web [psi]
     fc = s.fc; % Compressive strength of concrete deck
     ts = s.ts; % Thickness of concrete deck
     tf_top = s.tf_top(1); % Thickness of top flange (compression flange)
-    tf_bottom = s.tf_bottom(1); % Thickness of both top flange (tension flange)
+    tf_bot = s.tf_bot(1); % Thickness of both top flange (tension flange)
     bf_top = s.bf_top(1); % Width of top flange (compression flange)
-    bf_bottom = s.bf_bottom(1); % Width of bottom flange (tension flange)
+    bf_bot = s.bf_bot(1); % Width of bottom flange (tension flange)
     tw = s.tw; % Thickness of the web
     dweb = s.dw; % Depth of Web
     D = s.D; % [inches] Total depth of composite section   
@@ -33,7 +40,7 @@ function [Mp, Dpst, Dcp, id] = getMp(s)
     Ps = .85*fc*be*ts; % Plastic Force for slab [lbs]
     Pc = Fy*tf_top*bf_top; % Plastic Force for compression flange [lbs]
     Pw = Fy*tw*dweb; % Plastic Force for web [lbs]
-    Pt = Fy*tf_bottom*bf_bottom; % Plastic Force for tension flange [lbs]
+    Pt = Fy*tf_bot*bf_bot; % Plastic Force for tension flange [lbs]
 
     % Calculate plastic moment and location of plastic neutral axis.
     % (Reference AASHTO Appendix D6)
@@ -47,7 +54,7 @@ function [Mp, Dpst, Dcp, id] = getMp(s)
             PNAst = ts*((Pc+Pt+Pw)/Ps); % [inches] location of PNA from top of slab 
             dc = (tf_top/2)+dh+(ts-PNAst); % [inches] distance from comp. flange NA to PNA
             dw = (dweb/2)+tf_top+dh+(ts-PNAst); % [inches] distance from web NA to PNA
-            dt = (tf_bottom/2)+dweb+tf_top+dh+(ts-PNAst); % [inches] distance from tens. flange NA to PNA
+            dt = (tf_bot/2)+dweb+tf_top+dh+(ts-PNAst); % [inches] distance from tens. flange NA to PNA
             Mp = (((PNAst^2)*Ps)/(2*ts))+(Pc*dc+Pt*dt+Pw*dw); % [lb-in] 
             id = 7; % Case 3-7 in AD6
             Dpst = PNAst; % [inches] distance from the top of slab to PNA 

@@ -1,4 +1,4 @@
-function r = getPosFlex(s,d)
+function r = getPosFlex(r,s,d)
 % r = getPosFlex(s,d)
 %
 % *This version does not support negative haunch depths
@@ -29,15 +29,18 @@ function r = getPosFlex(s,d)
     SBlt = s.SBlt(1); % [in^3] Non-composite elastic section modulus measured from bottom flange
     STst = s.STst(1); % [in^3] Short term composite elastic section modulus measured from top flange
     SBst = s.SBst(1); % [in^3] Short term composite elastic section modulus measured from bottom flange
-    Rh = 1.0; % Hybrid factor (AASHTO LRFD Section 6.10.1.10.1)
-    Rb = 1.0; % Web Load-Shedding Factor (6.10.1.10.2)
+
+    Rb = r.Rb; % hybrid factor from class lrfr
+    Rh = r.Rh; % web load-shedding factor from class lrfr
 
     MDL_pos = d.MDL_pos; % Design non-composite dead load contribution (non-superimposed)
     MSDL_pos = d.MSDL_pos; % Design Composite dead laod contribution (superimposed)
     MSDW_pos = d.MSDW_pos; % Superimposed dead load fro wearing surface
 
     % Determine plastic moment and location of plastic netral axis
-    [Mp, Dpst, Dcp, id] = getMp(s);
+    [Mp, Dpst, Dcp, id] = r.getMp(s); % 
+    
+    Dp = Dpst; 
     
     % assign to r struct
 %     r.Mp = Mp; r.Dpst = Dpst; r.Dcp =Dcp; r.id = id;
