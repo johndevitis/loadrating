@@ -1,5 +1,6 @@
 name,value,unit,desc
 nSpans,2,int,Number of spans
+panel,int,string, (shear only) Panel location of section [interior/end]
 L,1428,in,Span Length
 Lb,324,in,Max unbraced Length
 Es,29000000,psi,Steel Modulous

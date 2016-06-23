@@ -1,5 +1,5 @@
 function getShear(r,s)
-%%
+%% LRFR Shear Rating
 %
 % Inputs: 
 %  s - composite section class
@@ -8,6 +8,8 @@ function getShear(r,s)
 % Outputs: 
 %  Vn % shear resistance
 %  Vp % plastic shear force
+%
+% refactored by jdv 06222016
 
     % Define Variables
     dw = s.dw;

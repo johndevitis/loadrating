@@ -1,6 +1,6 @@
 classdef lrfr < matlab.mixin.SetGet 
 %% classdef lrfr
-% author: 
+% author: jdv
 % create date: 24-May-2016 21:43:12
 
 	%% -- object properties -- %%

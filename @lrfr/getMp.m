@@ -15,6 +15,8 @@ function [Mp, Dpst, Dcp, id] = getMp(r,s)
 % Dpst - distance from the top of slab to PNA [in]
 % Dcp - depth of the web in compression at the plastic moment
 % id - integer case identifier per Table D6.1-1 for PNA location
+%
+% refactored by jdv 05242016
 
     % ensure section is composite
     if ~r.composite

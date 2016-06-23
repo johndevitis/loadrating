@@ -1,10 +1,20 @@
-classdef lfr
+classdef lfr < matlab.mixin.SetGet
 %% classdef lfr
-% author: 
+% author: jdv
 % create date: 24-May-2016 21:43:07
 
 	%% -- object properties -- %%
 	properties
+        % input
+%         region = 'pos' % determine compression/tension flange
+        
+        % outputs
+        webStiffened % webstiffener boolean
+        Mu_StrengthNeg % 
+        Fu_StrengthNeg % 
+        Fu_ServiceNeg %
+        Vp % plastic shear force
+        Vn % shear resistance
 	end
 
 	%% -- dependent properties -- %%
