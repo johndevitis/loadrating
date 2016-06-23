@@ -125,6 +125,7 @@ function sectionCompact = determineNonCompositeSectionCompactness(s)
 end
 
 
+% FIX ME PLEASE!
 function Mr = calculateLTBMoment(s)
 %% CALCULATE LATERAL TORSIONAL BUCKLING MOMENT 
     if dcNC/tw <= lmbda/sqrt(Fy)

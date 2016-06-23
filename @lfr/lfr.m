@@ -10,6 +10,11 @@ classdef lfr < matlab.mixin.SetGet
         
         % outputs
         webStiffened % webstiffener boolean
+        compactPos % positive moment region composite compactness boolean
+        compactNeg % negative moment region non-composite compactness boolean
+        Mu_StrengthPos % 
+        Fu_StrengthPos % 
+        Fu_ServicePos % service II
         Mu_StrengthNeg % 
         Fu_StrengthNeg % 
         Fu_ServiceNeg %
