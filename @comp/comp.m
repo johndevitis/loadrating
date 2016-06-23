@@ -151,6 +151,7 @@ classdef comp < section
         
         function ena_loc_st = get.ena_loc_st(obj)
         % location of short-term elastic neutral axis
+        % TODO: add haunch option
             if obj.yBst > obj.d
                 ena_loc_st = 'deck';
             elseif obj.yBst < obj.d
