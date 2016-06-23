@@ -1,9 +1,9 @@
 # load rating template
+*coming soon*
 
 # Input tabs
-Tabs required to use matlab api for results extraction are:
+
 
 # to do
 
-* add doc friendly equations tab 
-
+* add doc friendly equations tab
