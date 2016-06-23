@@ -39,7 +39,7 @@ res.logpath = [res.fullpath(1:end-1) 'L']; % .LSL log file path found using .LSA
 % flexure info
 flex.beamNums = [45 129 187];
 flex.flag = 'BM2'; % load case name flag
-flex.truckType = 'LRFR HL-93'; % TODO: change to load caes so it works for dl
+flex.truckType = 'LRFR HL-93'; % TODO: change to load case so it works for dl
 
 % shear info
 shear.beamNums = [3 87 1 2];
