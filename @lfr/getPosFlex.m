@@ -67,7 +67,7 @@ function getPosFlex(r,s,d)
 
         % AASHTO 10.129b
         if Dp <= D
-            r.Mu_pos = Mp; % <- r.Mu_StrengthPos? CHECK
+            r.Mu_StrengthPos = Mp; % 
         end
 
         % AASHTO 10.129c

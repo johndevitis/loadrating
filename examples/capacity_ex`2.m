@@ -19,7 +19,7 @@ c.read_csv('sectionprops_pos.csv');
 d = c.getSLGdemands();
 
 % create instance of lfr rating structure
-r = lfr()
+r = lfr();
 
 % positive flexure resistance
 r.getPosFlex(c,d)
