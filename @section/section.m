@@ -39,6 +39,8 @@ classdef section < fileio
         S2 % [in^3] elastic section modulus for secondary axis             
         Z % plastic section modulus        
         ry % effective radius of gyration for lateral torsional buckling 
+        Iyc % moment of inertia of the compression flange (assumed to be bottom)
+        J % polar moment of inertia (non-composite)
     end    
     
     methods        
@@ -47,6 +49,17 @@ classdef section < fileio
         end
                
         %% -- dependent methods -- %
+        function J = get.J(obj)
+        % polar moment of inertia (non-composite)
+            J = obj.Ix + obj.Iy;
+        end
+        function Iyc = get.Iyc(obj)
+        % moment of inertia of the compression flange for non-composite
+        % section - this is used for LFR negative flexure rating so it is
+        % assumed to be on the bottom
+            Iyc = obj.tf_bot * obj.bf_bot^3 / 12;        
+        end
+        
         function d = get.d(obj)
         % full depth of steel section
             d = obj.dw + obj.tf_top + obj.tf_bot;

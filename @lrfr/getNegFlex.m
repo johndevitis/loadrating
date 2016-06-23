@@ -9,8 +9,8 @@ function getNegFlex(r,s)
     Fy = s.Fy; % Yeild Strength of flanges and web [psi]
     Fyr = 0.7*Fy; % compression-flange stress at the onset of nominal yielding within the cross-section, including residual stress effects, but not including compression-flange lateral bending
     Es = s.Es; % Young's Modulus [psi]   
-    tf_bot = s.tf_bot; % Thickness of bottom flange (compression flange)
-    bf_bot = s.bf_bot; % Width of bottom flange (tension flange)
+    tf_bot = s.tf_bot(1); % Thickness of bottom flange (compression flange)
+    bf_bot = s.bf_bot(1); % Width of bottom flange (tension flange)
     % tw = s.tw; % Thickness of the web
     % dw = s.dw; % Depth of Web
     ry = s.ry; % Radius of gyration

@@ -6,7 +6,7 @@ classdef lfr < matlab.mixin.SetGet
 	%% -- object properties -- %%
 	properties
         % input
-%         region = 'pos' % determine compression/tension flange
+        region = 'pos' % determine compression/tension flange
         
         % outputs
         webStiffened % webstiffener boolean

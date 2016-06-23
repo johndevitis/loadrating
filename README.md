@@ -1,9 +1,8 @@
 # loadrating
 This project uses Matlab class definitions to provide an object oriented approach to load rating analysis. The goal is to build an extensible framework that can be used now as well as built upon as additional use-cases are encountered.
 
-## Where to start
 
-### Download
+## Where to start
 This project can be downloaded manually (if you do not plan on editing) or by using [Git](https://git-scm.com). Downloading and incorporating the Git client into your workflow is best as you will be able to save and track any changes you make (i.e. bug fixes, new features) which can then be merged back into this repository relatively easily, so please use it :)
 
 
@@ -26,5 +25,5 @@ If you are new to Git, I highly recommend reviewing the [manual](https://git-scm
 * check for non-composite capacity calcs
 
 * lfr
-	* fix lateral torsional buckling moment calculation in LFR getNegFlex (completely broken)
+	* ~~fix lateral torsional buckling moment calculation in LFR getNegFlex (completely broken)~~ This should be fixed, just needs to be error screened
   * change Mu -> Mn to be consistent w/ aashto documentation
