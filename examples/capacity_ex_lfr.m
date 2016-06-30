@@ -44,7 +44,7 @@ r.getPosFlex(c,cNeg,d)
 
 % create instance of lfr rating class
 r = lfr();
-% r.region = 'neg'; % change from 'pos' default - note this is lrfr only
+r.region = 'neg'; % change from 'pos' default - note this is only needed in lrfr 
 r.getShear(cNeg) % shear
 r.getNegFlex(cNeg) % negative flexure 
 

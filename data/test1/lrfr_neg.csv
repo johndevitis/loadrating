@@ -1,0 +1,14 @@
+region,neg
+Rh,1
+Rb,1
+composite,1
+webStiffened,1
+ductility,
+compact,
+Mn_Strength1Pos,
+Fn_Strength1Pos,
+Fn_Service2Pos,
+Fn_Strength1Neg,36000
+Fn_Service2Neg,28800
+Vn,870816.457
+Vp,916110

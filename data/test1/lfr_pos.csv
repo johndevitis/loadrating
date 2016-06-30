@@ -1,0 +1,12 @@
+region,pos
+webStiffened,
+compactPos,1
+compactNeg,0
+Mu_StrengthPos,
+Fu_StrengthPos,36000
+Fu_ServicePos,34200
+Mu_StrengthNeg,
+Fu_StrengthNeg,
+Fu_ServiceNeg,
+Vp,
+Vn,
