@@ -21,7 +21,7 @@ If you are new to Git, these links are a good place to start:
 
 * [the manual](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control)
 * [the cheatsheet](https://services.github.com/kit/downloads/github-git-cheat-sheet.pdf)
-* [a few commands I find myself using a lot](https://github.com/johndevitis/useful_things/git.md)
+* [a few commands I find myself using a lot](https://github.com/johndevitis/useful_things)
 
 ## Examples
 
