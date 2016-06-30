@@ -1,4 +1,4 @@
-classdef lrfr < matlab.mixin.SetGet 
+classdef lrfr < fileio
 %% classdef lrfr
 % author: jdv
 % create date: 24-May-2016 21:43:12
