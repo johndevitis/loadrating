@@ -74,17 +74,26 @@ classdef section < fileio
         
         function Ix = get.Ix(obj)
         % moment of inertia, strong axis
-            Ix = ((1/12)*obj.tw*obj.dw^3)+...
-                 (((1/12)*(obj.bf_top.*obj.tf_top).^3)+...
-                 ((obj.bf_top.*obj.tf_top).*((obj.dw+obj.tf_top)/2)^2))+...
-                 (((1/12)*(obj.bf_bot.*obj.tf_bot).^3)+...
-                 ((obj.bf_bot.*obj.tf_bot).*((obj.dw+obj.tf_bot)/2).^2));            
+        %  uses parallel axis theorem
+            dyTop = obj.dw/2 + obj.tf_top/2; % distance to top flange centroid
+            dyBot = obj.dw/2 + obj.tf_bot/2; % distance to bottom flange centroid
+            ATop = obj.tf_top * obj.bf_top;  % area of top flange
+            ABot = obj.tf_bot * obj.bf_bot;  % area of bot flange            
+            % calc order: 
+            %   web
+            %   top flange
+            %   bottom flange
+            Ix = (1/12 * obj.tw * obj.dw^3) + ...   
+                 (1/12 * obj.bf_top * obj.tf_top^3 + ATop * dyTop^2) + ...
+                 (1/12 * obj.bf_bot * obj.tf_bot^3 + ABot * dyBot^2);            
         end
         
         function Iy = get.Iy(obj)
         % moment of inertia, weak axis
-            Iy = (1/12)*(((obj.tf_top.*obj.bf_top).^3)+...
-                 ((obj.tf_bot.*obj.bf_bot).^3)+(obj.dw*obj.tw^3));
+        %  assumes top and bottom flanges are at center of n.a.
+            Iy = (1/12 * obj.dw * obj.tw^3) + ...
+                 (1/12 * obj.tf_top * obj.bf_top^3) + ...
+                 (1/12 * obj.tf_bot * obj.bf_bot^3);
         end                 
         
         function A = get.A(obj)
