@@ -101,7 +101,8 @@ classdef section < fileio
             A = (obj.bf_top.* obj.tf_top)+(obj.bf_bot.*obj.tf_bot) + ...
                 (obj.dw*obj.tw);
         end
-                function dcNC = get.dcNC(obj)
+        
+        function dcNC = get.dcNC(obj)
         % depth of web in compression in elastic range
             dcNC = obj.dw/2;
         end
