@@ -15,6 +15,7 @@
 	* REFERENCE 3-16 of FHWA LRFD Steel Bridge Design Example (pdf page 127) - uses DLmisc = .015 K/ft
 * section props (yTcn yBnc) assume top and bottom flange are same thickness - FIX
 * S2 calc in section - Iy/bf_bot/2 -> why bottom flange? 
+* Iyc - need tension flange info also for proportion limits? 
 
 
 
