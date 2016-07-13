@@ -46,7 +46,7 @@ function getPosFlex(r,s,sNeg,d)
     
     
     %% Calculate plastic neutral axis and plastic moment
-    [Mp, Dp, Dcp] = calculateSectionPlasticMoment(s);
+    [Mp, Dp, Dcp] = calculateSectionPlasticMoment(s)
 
 
     %% Calculate composite section compactness (pos. moment region)
