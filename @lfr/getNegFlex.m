@@ -68,8 +68,7 @@ function getNegFlex(r,s)
             r.Fu_StrengthNeg = min(Mu_pier)/SBnc;
         else   
             % Calculate lateral torsional buckling moment
-            s = calculateLTBMoment(s);
-            Mr = s.Mr;
+            Mr = calculateLTBMoment(s);
 
             % For partially braced Non-compact section at pier if continous (10.48.4)
             r.Fu_StrengthNeg = min(Mr*Rb, Fcr*SBnc*Rb)/SBnc; % 10-103a

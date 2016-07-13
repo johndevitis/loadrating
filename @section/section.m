@@ -128,7 +128,7 @@ classdef section < fileio
         end
         
         function S2 = get.S2(obj)
-        % elastic section modulus for seconcary axis
+        % elastic section modulus for secondary axis
             S2 = obj.Iy./(obj.bf_bot/2);
         end
         
