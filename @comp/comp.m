@@ -85,7 +85,7 @@ classdef comp < section
 		function yTst = get.yTst(obj)
 		% distance of E.N.A. to top of top flange
             if strcmp(obj.ena_loc_st,'deck')
-                yTst = obj.Bst - obj.d;
+                yTst = obj.yBst - obj.d;
             else
                 yTst = obj.d - obj.yBst;
             end
