@@ -5,7 +5,6 @@
 
 # matlab files
 *.asv
-*.mat
 
 # any temporary files
 *.tmp
