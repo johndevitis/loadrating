@@ -101,7 +101,7 @@ classdef fileio < matlab.mixin.SetGet
         end
         
         function write(obj,fname,del)
-            % low level file write. optional deliminator field
+            % low level file write. optional delimiter field
             % del [comma default]
             %  options: 
             %   ',' or 'comma' for comma 

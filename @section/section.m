@@ -29,7 +29,7 @@ classdef section < fileio
         d % total depth of non-composite steel section (wide flange)[in] 
         Ec % deck modulous [psi] -> 57000*sqrt(fc)      
         Ix % moments of inertia Ix [in^4]
-        Iy % moment of intertia Iy [in^4]
+        Iy % moment of intertia Iy [in^4] 
         A  % section area
         dcNC % depth of web in compression in elastic range [in]
         yTnc % distance to top of section
