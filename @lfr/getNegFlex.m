@@ -136,10 +136,12 @@ function Mr = calculateLTBMoment(s)
     Lb = s.Lb;
     J = s.J;
     d = s.d;
-    ry = s.ry;
+    ry = s.ry; % NOTE: radius of gyration comes from LRFR - verify for LFR
     SBnc = s.SBnc;
-    Cb = 1.0;
+    Cb = 1.0;  % NOTE: Cb is statically defined, need to change
     D = s.D;
+    tf_tNeg = s.tf_top;
+    tf_bNeg = s.tf_bot;
 
     % Moment at first yield
     My = Fy*SBnc;
@@ -155,7 +157,7 @@ function Mr = calculateLTBMoment(s)
         % AASHTO 10-103c
         Mr = 91*(10^6)*Cb*(Iyc/Lb)*sqrt(0.772*(J/Iyc)+9.87*(d/Lb)^2);
     else
-        Lp = 9500*rt/sqrt(Fy);
+        Lp = 9500*ry/sqrt(Fy); % NOTE: changed rt -> ry
         Lr = sqrt((572*(10^6)*Iyc*(dw+tf_tNeg+tf_bNeg))/(Fy*SBnc)); % 10-103f
         if Lb > Lr
             % AASHTO 10-103g
