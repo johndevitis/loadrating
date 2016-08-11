@@ -13,13 +13,13 @@
 c = comp();
 
 % read positive section props from 
-c.read_csv('sectionprops_pos.csv');
+c.read_csv('1136176_S45_sectionprops_pos_S4_G10');
 
 % LFR positive flexure resistance requires corresponding negative
 % section properties in addition to the positive section properties, so
 % we'll load these also
 cNeg = comp();
-cNeg.read_csv('sectionprops_neg.csv');
+cNeg.read_csv('1136176_S45_sectionprops_neg_pier4_G10');
 
 
 % get single line girder [SLG] demands w/ section method
