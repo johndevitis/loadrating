@@ -75,15 +75,17 @@ classdef section < fileio
         function Ix = get.Ix(obj)
         % moment of inertia, strong axis
         %  uses parallel axis theorem
-            dyTop = obj.dw/2 + obj.tf_top/2; % distance to top flange centroid
-            dyBot = obj.dw/2 + obj.tf_bot/2; % distance to bottom flange centroid
+            dyTop = obj.yTnc - obj.tf_top/2; % distance to top flange centroid
+            dyBot = obj.yBnc - obj.tf_bot/2; % distance to bottom flange centroid
+            dyWeb = obj.yTnc - obj.dw/2 - obj.tf_top; % distance to web centroid
             ATop = obj.tf_top * obj.bf_top;  % area of top flange
-            ABot = obj.tf_bot * obj.bf_bot;  % area of bot flange            
+            ABot = obj.tf_bot * obj.bf_bot;  % area of bot flange 
+            AWeb = obj.tw * obj.dw;
             % calc order: 
             %   web
             %   top flange
             %   bottom flange
-            Ix = (1/12 * obj.tw * obj.dw^3) + ...   
+            Ix = (1/12 * obj.tw * obj.dw^3 + AWeb * dyWeb^2) + ...   
                  (1/12 * obj.bf_top * obj.tf_top^3 + ATop * dyTop^2) + ...
                  (1/12 * obj.bf_bot * obj.tf_bot^3 + ABot * dyBot^2);            
         end
@@ -101,19 +103,30 @@ classdef section < fileio
             A = (obj.bf_top.* obj.tf_top)+(obj.bf_bot.*obj.tf_bot) + ...
                 (obj.dw*obj.tw);
         end
-                function dcNC = get.dcNC(obj)
+        
+        function dcNC = get.dcNC(obj)
         % depth of web in compression in elastic range
-            dcNC = obj.dw/2;
+            dcNC = obj.yTnc - obj.tf_top;
         end
         
         function yTnc = get.yTnc(obj)
-        % distance to top of section
-            yTnc = obj.d/2;
+        % distance to top of section from centroid
+        % Moment of areas divided by total area
+            dyTop = obj.dw/2 + obj.tf_top/2; % distance to top flange centroid
+            dyBot = obj.dw/2 + obj.tf_bot/2; % distance to bottom flange centroid
+            ATop = obj.tf_top * obj.bf_top;  % area of top flange
+            ABot = obj.tf_bot * obj.bf_bot;  % area of bot flange
+            yTnc = obj.dw/2 + obj.tf_top - (ATop * dyTop + ABot * -dyBot)/(ATop + ABot);
         end
         
         function yBnc = get.yBnc(obj)
-        % distance to bottom of section
-            yBnc = obj.d/2;
+        % distance to bottom of section from centroid
+%             dyTop = obj.dw/2 + obj.tf_top/2; % distance to top flange centroid
+%             dyBot = obj.dw/2 + obj.tf_bot/2; % distance to bottom flange centroid
+%             ATop = obj.tf_top * obj.bf_top;  % area of top flange
+%             ABot = obj.tf_bot * obj.bf_bot;  % area of bot flange
+%             yBnc = obj.dw/2 + obj.tf_bot + (ATop * dyTop + ABot * -dyBot)/(ATop + ABot);
+            yBnc = obj.d-obj.yTnc;
         end
         
         function STnc = get.STnc(obj)
@@ -140,13 +153,13 @@ classdef section < fileio
         function Z = get.Z(obj)
         % plastic section modulus
             flangeAc = obj.bf_bot.*obj.tf_bot;
-            flangeYc = obj.tf_bot/2 + obj.dw/2;
-            webAc = obj.tw * obj.dw/2;
-            webYc = obj.dw/2;           
+            flangeYc = obj.yBnc - obj.tf_bot/2;
+            webAc = obj.tw * (obj.yBnc - obj.tf_bot);
+            webYc = (obj.yBnc - obj.tf_bot)/2;           
             flangeAt = obj.bf_top.*obj.tf_top;
-            flangeYt = obj.tf_top/2 + obj.dw/2;          
-            webAt = obj.tw*obj.dw/2;
-            webYt = obj.dw/2;            
+            flangeYt = obj.yTnc - obj.tf_top/2;          
+            webAt = obj.tw*(obj.yTnc-obj.tf_top);
+            webYt = (obj.yTnc-obj.tf_top)/2;            
             Z = (flangeAc.*flangeYc) + (webAc*webYc) + ...
                 (flangeAt.*flangeYt) + (webAt*webYt);        
         end        
