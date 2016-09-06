@@ -106,6 +106,7 @@ classdef section < fileio
         
         function dcNC = get.dcNC(obj)
         % depth of web in compression in elastic range
+        % assumes top of web is in compression
             dcNC = obj.yTnc - obj.tf_top;
         end
         
