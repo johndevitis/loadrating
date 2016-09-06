@@ -117,7 +117,9 @@ classdef section < fileio
             dyBot = obj.dw/2 + obj.tf_bot/2; % distance to bottom flange centroid
             ATop = obj.tf_top * obj.bf_top;  % area of top flange
             ABot = obj.tf_bot * obj.bf_bot;  % area of bot flange
-            yTnc = obj.dw/2 + obj.tf_top - (ATop * dyTop + ABot * -dyBot)/(ATop + ABot);
+            ABot = obj.tf_bot * obj.bf_bot;  % area of bot flange 
+            AWeb = obj.tw * obj.dw;
+            yTnc = obj.dw/2 + obj.tf_top - (ATop * dyTop + ABot * -dyBot)/(ATop + ABot + AWeb);
         end
         
         function yBnc = get.yBnc(obj)
