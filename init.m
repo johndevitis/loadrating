@@ -1,6 +1,7 @@
 function init()
 %% init
-% startup fcn
+% when called, the startup fcn adds all folders and subfolders in its root
+% directory to matlab's search path
 %
 % jdv 06/22/2016
 
