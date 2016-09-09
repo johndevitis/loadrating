@@ -17,7 +17,7 @@ function d = getSLGdemands(s)
         SpanLength(ii) = round(s.L/12)'; % in -> ft
     end
     
-    nElem = round(TotalLength); % # of beam elements discretized at 1 foot
+    nElem = sum(SpanLength); % # of beam elements discretized at 1 foot
     nNode = nElem + 1; % number of nodes along entire length
     nDOF = nNode*2; % number of DOFs (deflection/rotation at each node)
 
