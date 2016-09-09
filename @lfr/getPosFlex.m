@@ -18,6 +18,8 @@ function getPosFlex(r,s,sNeg,d)
     dh = s.dh;
     dw = s.dw;
     tw = s.tw;
+    Dc = s.dw/2;
+    D_total = s.d;
     tf_tPos  = s.tf_top;
     bf_tPos  = s.bf_top;
     tf_bPos = s.tf_bot;
@@ -97,6 +99,7 @@ function getPosFlex(r,s,sNeg,d)
 
         % Flange stress reduction factor, Rb 
         Fcr = (4400*tf_bPos/bf_bPos)^2;
+        Afc = bf_tPos*tf_tPos;
         Rb = 1 - 0.002*(Dc*tw/Afc)*((Dc/tw)-(lmbda/sqrt(Fy))); % 10-103b
 
         % AASHTO MBE Appendix L6B.2.1.4
